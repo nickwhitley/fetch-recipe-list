@@ -5,7 +5,7 @@ class RecipeService {
     private let recipeURL = URLs.recipes
     private let decoder = JSONDecoder()
     
-    func fetchRecipes() async -> [Recipe] {
+    func fetchRecipes() async throws -> [Recipe] {
         do {
             let (data, _) = try await session.data(from: recipeURL)
             let response = try decoder.decode(RecipeList.self, from: data)
