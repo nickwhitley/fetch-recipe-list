@@ -12,7 +12,7 @@ import SwiftData
 struct fetchRecipeListApp: App {
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
-            Item.self,
+            
         ])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
 
@@ -22,11 +22,14 @@ struct fetchRecipeListApp: App {
             fatalError("Could not create ModelContainer: \(error)")
         }
     }()
+    
+    let recipeListViewModel = RecipeListViewModel(recipeService: RecipeService())
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            RecipeListScreen()
         }
         .modelContainer(sharedModelContainer)
+        .environment(recipeListViewModel)
     }
 }
