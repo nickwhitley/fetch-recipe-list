@@ -12,7 +12,7 @@ class RecipeListViewModel {
     
     func fetchRecipes() async {
         do {
-            recipes = try await recipeService.fetchRecipes()
+            recipes = try await recipeService.fetchRecipes(recipeUrl: .validRecipes)
         } catch {
             
         }

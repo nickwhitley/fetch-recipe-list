@@ -13,10 +13,10 @@ struct RecipeListScreen: View {
                 }
             }
         }
+        .listStyle(.plain)
+        .navigationTitle("Recipes")
         .task {
             await viewModel.fetchRecipes()
         }
-        .listStyle(.plain)
-        .navigationTitle("Recipes")
     }
 }
