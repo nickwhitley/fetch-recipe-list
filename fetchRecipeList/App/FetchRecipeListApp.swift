@@ -9,7 +9,7 @@ import SwiftUI
 import SwiftData
 
 @main
-struct fetchRecipeListApp: App {
+struct FetchRecipeListApp: App {
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
             
@@ -23,13 +23,27 @@ struct fetchRecipeListApp: App {
         }
     }()
     
-    let recipeListViewModel = RecipeListViewModel(recipeService: RecipeService())
+    
+    
 
     var body: some Scene {
         WindowGroup {
             RecipeListScreen()
+                .addEnvironments()
         }
         .modelContainer(sharedModelContainer)
-        .environment(recipeListViewModel)
+        
+    }
+}
+
+extension View {
+    func addEnvironments() -> some View {
+        var recipeListViewModel = {
+            let isRunningInPreview = ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] == "1"
+            return RecipeListViewModel(recipeService: isRunningInPreview ? MockRecipeService() : RecipeService())
+        }()
+        
+        return self
+            .environment(recipeListViewModel)
     }
 }

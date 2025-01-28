@@ -3,10 +3,10 @@ import Observation
 @Observable
 @MainActor
 class RecipeListViewModel {
-    private let recipeService: RecipeService
+    private let recipeService: RecipeServiceProtocol
     var recipes: [Recipe] = []
     
-    init(recipeService: RecipeService){
+    init(recipeService: RecipeServiceProtocol){
         self.recipeService = recipeService
     }
     

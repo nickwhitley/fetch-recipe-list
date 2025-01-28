@@ -1,6 +1,6 @@
 import Foundation
 
-class RecipeService {
+class RecipeService: RecipeServiceProtocol {
     private let session: URLSession
     private let decoder = JSONDecoder()
     
@@ -16,16 +16,15 @@ class RecipeService {
             throw RecipeServiceError.invalidURL
         }
         
-        let request = URLRequest(url: url, cachePolicy: .returnCacheDataElseLoad, timeoutInterval: 10)
-        let (data, response) = try await session.data(for: request)
-        
-        guard let httpResonse = response as? HTTPURLResponse, httpResonse.statusCode == 200 else {
-            throw RecipeServiceError.requestFailed
-        }
-        
         do {
-            let recipeData = try decoder.decode(RecipeList.self, from: data)
+            let request = URLRequest(url: url, cachePolicy: .returnCacheDataElseLoad, timeoutInterval: 10)
+            let (data, respone) = try await session.data(for: request)
             
+            guard let httpResponse = respone as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+                throw RecipeServiceError.requestFailed
+            }
+            
+            let recipeData = try decoder.decode(RecipeList.self, from: data)
             guard !recipeData.recipes.isEmpty else {
                 throw RecipeServiceError.responseEmpty
             }
@@ -37,6 +36,7 @@ class RecipeService {
             }
         } catch {
             print("Error fetching recipes: \(error)")
+            throw error
         }
         return []
     }
