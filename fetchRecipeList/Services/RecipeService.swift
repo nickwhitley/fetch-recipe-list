@@ -1,24 +1,18 @@
 import Foundation
 
 class RecipeService: RecipeServiceProtocol {
-    private let session: URLSession
+    private let session: URLSession = .shared
     private let decoder = JSONDecoder()
-    
-    init() {
-        let configuration = URLSessionConfiguration.default
-        configuration.urlCache = URLCache.shared
-        configuration.requestCachePolicy = .returnCacheDataElseLoad
-        session = URLSession(configuration: configuration)
-    }
+    private let logger = BasicLogger<RecipeService>()
     
     func fetchRecipes(recipeUrl: RecipeUrl) async throws -> [Recipe] {
+        logger.info("Fetching recipes")
         guard let url = recipeUrl.url else {
             throw RecipeServiceError.invalidURL
         }
         
         do {
-            let request = URLRequest(url: url, cachePolicy: .returnCacheDataElseLoad, timeoutInterval: 10)
-            let (data, respone) = try await session.data(for: request)
+            let (data, respone) = try await session.data(from: url)
             
             guard let httpResponse = respone as? HTTPURLResponse, httpResponse.statusCode == 200 else {
                 throw RecipeServiceError.requestFailed
