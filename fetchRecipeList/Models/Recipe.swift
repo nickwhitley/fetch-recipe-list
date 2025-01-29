@@ -1,10 +1,15 @@
 import Foundation
+import SwiftData
 
 struct RecipeList: Codable {
-    let recipes: [Recipe]
+    let recipes: [RecipeDTO]
+    
+    func toRecipeList() -> [Recipe] {
+        return recipes.map { $0.toDataModel() }
+    }
 }
 
-struct Recipe: Codable, Identifiable {
+struct RecipeDTO: Codable, Identifiable {
     let id: UUID
     let cuisine: String
     let name: String
@@ -12,6 +17,16 @@ struct Recipe: Codable, Identifiable {
     let smallImageUrl: URL?
     let sourceUrl: URL?
     let youtubeUrl: URL?
+    
+    func toDataModel() -> Recipe {
+        return Recipe(id: id,
+                           cuisine: cuisine,
+                           name: name,
+                           largeImageUrl: largeImageUrl,
+                           smallImageUrl: smallImageUrl,
+                           sourceUrl: sourceUrl,
+                           youtubeUrl: youtubeUrl)
+    }
     
     enum CodingKeys: String, CodingKey {
         case id = "uuid"
@@ -23,3 +38,25 @@ struct Recipe: Codable, Identifiable {
         case youtubeUrl = "youtube_url"
     }
 }
+
+@Model
+class Recipe {
+    var id: UUID
+    var cuisine: String
+    var name: String
+    var largeImageUrl: URL?
+    var smallImageUrl: URL?
+    var sourceUrl: URL?
+    var youtubeUrl: URL?
+    
+    init(id: UUID, cuisine: String, name: String, largeImageUrl: URL?, smallImageUrl: URL?, sourceUrl: URL?, youtubeUrl: URL?) {
+        self.id = id
+        self.cuisine = cuisine
+        self.name = name
+        self.largeImageUrl = largeImageUrl
+        self.smallImageUrl = smallImageUrl
+        self.sourceUrl = sourceUrl
+        self.youtubeUrl = youtubeUrl
+    }
+}
+

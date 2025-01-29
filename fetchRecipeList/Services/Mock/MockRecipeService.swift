@@ -24,11 +24,11 @@ class MockRecipeService: RecipeServiceProtocol {
     
     private func loadRecipes(from filename: String) throws -> [Recipe] {
         guard let url = Bundle.main.url(forResource: filename, withExtension: nil) else {
-            throw RecipeServiceError.invalidURL
+            throw NetworkServiceError.invalidURL
         }
         
         let data = try Data(contentsOf: url)
-        let recipeList = try decoder.decode(RecipeList.self, from: data).recipes
+        let recipeList = try decoder.decode(RecipeList.self, from: data).toRecipeList()
         return recipeList
     }
 }

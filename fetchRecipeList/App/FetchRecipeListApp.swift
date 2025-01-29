@@ -12,7 +12,7 @@ import SwiftData
 struct FetchRecipeListApp: App {
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
-            
+            Recipe.self
         ])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
 
@@ -38,9 +38,11 @@ struct FetchRecipeListApp: App {
 
 extension View {
     func addEnvironments() -> some View {
-        var recipeListViewModel = {
+        let recipeListViewModel = {
             let isRunningInPreview = ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] == "1"
-            return RecipeListViewModel(recipeService: isRunningInPreview ? MockRecipeService() : RecipeService())
+            return RecipeListViewModel(recipeService: isRunningInPreview
+                                       ? MockRecipeService()
+                                       : RecipeService(networkService: NetworkService()))
         }()
         
         return self

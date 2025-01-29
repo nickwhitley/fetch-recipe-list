@@ -42,7 +42,7 @@ struct FetchTests {
     let recipeService: RecipeService
     
     init() {
-        recipeService = RecipeService()
+        recipeService = RecipeService(networkService: NetworkService())
     }
     
     @Test func fetchRecipesSuccess() async {

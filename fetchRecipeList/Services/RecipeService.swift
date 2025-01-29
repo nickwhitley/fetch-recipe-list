@@ -1,57 +1,26 @@
 import Foundation
 
 class RecipeService: RecipeServiceProtocol {
-    private let session: URLSession = .shared
-    private let decoder = JSONDecoder()
+#warning("maybe make a logger factory")
     private let logger = BasicLogger<RecipeService>()
+    private let networkService: NetworkServiceProtocol
+    
+    init(networkService: NetworkServiceProtocol) {
+        self.networkService = networkService
+    }
     
     func fetchRecipes(recipeUrl: RecipeUrl) async throws -> [Recipe] {
         logger.info("Fetching recipes")
-        guard let url = recipeUrl.url else {
-            throw RecipeServiceError.invalidURL
-        }
-        
         do {
-            let (data, respone) = try await session.data(from: url)
-            
-            guard let httpResponse = respone as? HTTPURLResponse, httpResponse.statusCode == 200 else {
-                throw RecipeServiceError.requestFailed
-            }
-            
-            let recipeData = try decoder.decode(RecipeList.self, from: data)
-            guard !recipeData.recipes.isEmpty else {
-                throw RecipeServiceError.responseEmpty
-            }
-            
-            return recipeData.recipes
-        } catch let error as RecipeServiceError {
-            if error == .responseMalformed || error == .requestFailed {
-                throw error
-            }
+            let recipeData: RecipeList = try await networkService.sendRequest(url: recipeUrl.rawValue)
+            let recipes = recipeData.toRecipeList()
+            logger.info("Fetched \(recipes.count) recipes")
+            return recipes
         } catch {
-            print("Error fetching recipes: \(error)")
+            logger.error(error.localizedDescription)
             throw error
         }
-        return []
     }
 }
 
-enum RecipeServiceError: Error {
-    case invalidURL
-    case requestFailed
-    case responseMalformed
-    case responseEmpty
-    
-    var errorDescription: String? {
-        switch self {
-        case .invalidURL:
-            return "Invalid URL provided."
-        case .requestFailed:
-            return "Request failed."
-        case .responseMalformed:
-            return "Response was malformed."
-        case .responseEmpty:
-            return "Response was empty."
-        }
-    }
-}
+

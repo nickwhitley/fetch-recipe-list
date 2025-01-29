@@ -4,6 +4,7 @@ struct RecipeListScreen: View {
     @Environment(RecipeListViewModel.self) var viewModel
     
     var body: some View {
+        @Bindable var vmBinding = viewModel
         TitleBar()
         ScrollView {
             if viewModel.recipes.isEmpty {
@@ -17,10 +18,17 @@ struct RecipeListScreen: View {
         }
         .listStyle(.plain)
         .task {
-            await viewModel.fetchRecipes()
+            await viewModel.fetchRecipes(recipeUrl: .malformedRecipes)
         }
         .refreshable {
             await viewModel.fetchRecipes()
+        }
+        .alert(viewModel.alertMessage, isPresented: $vmBinding.alertPresented) {
+            Button("Try again", role: .cancel) {
+                Task {
+                    await viewModel.fetchRecipes()
+                }
+            }
         }
     #warning("Handle Accessibility")
     }
