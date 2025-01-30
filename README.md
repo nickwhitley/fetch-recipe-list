@@ -28,9 +28,15 @@ Total time spent was around 8 hours:
 * Utilities: 1 hour
 
 ### Trade-offs and Decisions: Did you make any significant trade-offs in your approach?
-Due to minimal scope of application I decided not to make some things as generic as they should be. For example, the logger should be built by a logger factory to allow for logger changes without affecting services or models using a logger. Also due to minimal scope my networking components are a lot more specified than they should be. I would normally build out more available usages such as full request handling with optional bodies and headers.
+* The logger should be built using a logger factory to allow different loggers to be interchangable.
+* My networking components are more specific then they should be. I would normally implement a more flexible request handling system with optional request bodies and headers.
 
 ### Weakest Part of the Project: What do you think is the weakest part of your project?
-There could be more robust error handling, I'm handling all required error with intention but any other unexpected error wouldn't be handled differently. Unit testing could use more work to handle more scenarios and edge cases.
-
+* Error handling could be more robust. While I handle all required errors intentionally, unexpected errors are not treated differently.
+* Unit testing could be expanded to cover more scenarios and edge cases.
+* Some UI elements could benefit from smoother animations or animations in general.
+  
 ### Additional Information: Is there anything else we should know? Feel free to share any insights or constraints you encountered.
+* You'll see two contributers which are my personal and profession git account, both belong to me.
+* I would like to handle some navigation because I have an interesting way to handle navigation that isn't commonly seen but very robust in it's own right.
+* I generally don’t use comments in my code unless something isn’t self-explanatory. I strongly believe in writing clean and clear code.
