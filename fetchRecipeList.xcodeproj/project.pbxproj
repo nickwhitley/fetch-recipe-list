@@ -40,6 +40,11 @@
 			path = fetchRecipeListTests;
 			sourceTree = "<group>";
 		};
+		727A0DA02D4BF97700941539 /* Media */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Media;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +78,7 @@
 				727A0C362D478C1700941539 /* fetchRecipeList */,
 				727A0C492D478C1800941539 /* fetchRecipeListTests */,
 				727A0C352D478C1700941539 /* Products */,
+				727A0DA02D4BF97700941539 /* Media */,
 			);
 			sourceTree = "<group>";
 		};
@@ -103,6 +109,7 @@
 			);
 			fileSystemSynchronizedGroups = (
 				727A0C362D478C1700941539 /* fetchRecipeList */,
+				727A0DA02D4BF97700941539 /* Media */,
 			);
 			name = fetchRecipeList;
 			packageProductDependencies = (

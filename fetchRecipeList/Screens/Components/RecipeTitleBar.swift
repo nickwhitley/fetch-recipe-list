@@ -43,12 +43,8 @@ struct RecipeTitleBar: View {
             if toolBarVisible {
                 Image(systemName: "xmark").foregroundStyle(.black)
             } else {
-                HStack(spacing: 0) {
-                    Image(systemName: "magnifyingglass")
-                        .foregroundStyle(.black)
-                    Image(systemName: "arrow.up.arrow.down")
-                        .foregroundStyle(.black)
-                }
+                Image(systemName: "magnifyingglass")
+                    .foregroundStyle(.black)
             }
         })
     }
@@ -86,9 +82,10 @@ struct RecipeTitleBar: View {
         }, label: {
             Text("Name")
                 .lineLimit(1)
+                .foregroundStyle(viewModel.nameSort == .none ? .gray : .black)
             switch viewModel.nameSort {
             case .none:
-                Image(systemName: "circlebadge")
+                EmptyView()
             case .descending:
                 Image(systemName: "arrow.down")
             case .ascending:
@@ -105,9 +102,10 @@ struct RecipeTitleBar: View {
         }, label: {
             Text("Cuisine")
                 .lineLimit(1)
+                .foregroundStyle(viewModel.cuisineSort == .none ? .gray : .black)
             switch viewModel.cuisineSort {
             case .none:
-                Image(systemName: "circlebadge")
+                EmptyView()
             case .descending:
                 Image(systemName: "arrow.down")
             case .ascending:
