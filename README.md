@@ -2,9 +2,9 @@
 
 ### Summary: Include screen shots or a video of your app highlighting its features
 <div>
-   <img width="33%" src="/Media/HomeScreen.pnc">
+   <img width="33%" src="/Media/HomeScreen.png">
    <img width="33%" src="/Media/MalformedError.png">
-   <img width="33%" src="/Media/NoRecipesFound.pnc">
+   <img width="33%" src="/Media/NoRecipesFound.png">
 </div>
 
 ### Focus Areas: What specific areas of the project did you prioritize? Why did you choose to focus on these areas?
