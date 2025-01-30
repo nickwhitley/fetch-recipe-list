@@ -3,7 +3,6 @@ import SwiftUI
 struct RecipeTitleBar: View {
     @Environment(RecipeListViewModel.self) var viewModel
     @State var toolBarVisible: Bool = false
-    @State var searchText: String = ""
     //used to disable buttons and search field during animation
     @State var isAnimating: Bool = false
     
