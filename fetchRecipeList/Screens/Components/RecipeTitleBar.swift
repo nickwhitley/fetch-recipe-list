@@ -17,22 +17,22 @@ struct RecipeTitleBar: View {
                     .padding(.horizontal)
                 Spacer()
                 if toolBarVisible {
-                    SortBar()
+                    sortBar()
                         .transition(.move(edge: .trailing).combined(with: .opacity))
                 }
-                SearchSortButton()
+                searchSortButton()
                     .padding(.horizontal)
             }
             if toolBarVisible {
                 @Bindable var bindingVm = viewModel
-                SearchField(text: $bindingVm.searchText)
+                searchField(text: $bindingVm.searchText)
                     .transition(.move(edge: .trailing).combined(with: .opacity))
             }
         }
         .dynamicTypeSize(.xLarge)
     }
     
-    func SearchSortButton() -> some View {
+    func searchSortButton() -> some View {
         Button( action: {
             isAnimating = true
             withAnimation {
@@ -49,15 +49,15 @@ struct RecipeTitleBar: View {
         })
     }
     
-    func SortBar() -> some View {
+    func sortBar() -> some View {
         HStack(spacing: 15) {
-            NameSortButton()
-            CuisineSortButton()
+            nameSortButton()
+            cuisineSortButton()
         }
         .minimumScaleFactor(0.6)
     }
     
-    func SearchField(text: Binding<String>) -> some View {
+    func searchField(text: Binding<String>) -> some View {
         TextField(text: text, label: {
             Image(systemName: "magnifyingglass")
         })
@@ -67,18 +67,18 @@ struct RecipeTitleBar: View {
             RoundedRectangle(cornerRadius: 25)
                 .stroke(Color.black, lineWidth: 2)
         )
-        .clipShape(RoundedRectangle(cornerRadius: 25))
         .frame(height: 25)
-        .padding(.horizontal)
-        .padding(.bottom)
+        .padding([.horizontal, .bottom])
         .submitLabel(.done)
         .disabled(isAnimating)
         
     }
     
-    func NameSortButton() -> some View {
+    func nameSortButton() -> some View {
         Button(action: {
-            viewModel.sortRecipesByName()
+            withAnimation {
+                viewModel.sortRecipesByName()
+            }
         }, label: {
             Text("Name")
                 .lineLimit(1)
@@ -96,9 +96,11 @@ struct RecipeTitleBar: View {
         .foregroundStyle(.black)
     }
     
-    func CuisineSortButton() -> some View {
+    func cuisineSortButton() -> some View {
         Button(action: {
-            viewModel.sortRecipesByCuisine()
+            withAnimation {
+                viewModel.sortRecipesByCuisine()
+            }
         }, label: {
             Text("Cuisine")
                 .lineLimit(1)

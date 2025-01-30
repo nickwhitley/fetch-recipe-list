@@ -28,7 +28,7 @@ class MockRecipeService: RecipeServiceProtocol {
         }
         
         let data = try Data(contentsOf: url)
-        let recipeList = try decoder.decode(RecipeList.self, from: data).toRecipeList()
+        let recipeList = try decoder.decode(RecipeList.self, from: data).toDataModelList()
         return recipeList
     }
 }

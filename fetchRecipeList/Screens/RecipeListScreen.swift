@@ -32,10 +32,10 @@ struct RecipeListScreen: View {
         }
         .overlay {
             if viewModel.isLoading {
-                LoadingView()
+                loadingView()
             }
             if let recipe = viewModel.largeImageViewRecipe {
-                LargeImageView(recipe: recipe)
+                largeImageView(recipe: recipe)
                     .onTapGesture {
                         viewModel.largeImageViewRecipe = nil
                     }
@@ -43,9 +43,7 @@ struct RecipeListScreen: View {
         }
     }
     
-    
-    
-    func LargeImageView(recipe: Recipe) -> some View {
+    func largeImageView(recipe: Recipe) -> some View {
         Rectangle()
             .foregroundStyle(.ultraThinMaterial)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -63,7 +61,7 @@ struct RecipeListScreen: View {
             }
     }
     
-    func LoadingView() -> some View {
+    func loadingView() -> some View {
         Group {
             Rectangle()
                 .foregroundStyle(.white)

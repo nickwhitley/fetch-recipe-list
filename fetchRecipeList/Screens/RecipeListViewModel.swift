@@ -41,13 +41,11 @@ class RecipeListViewModel {
         nameSort = .none
         switch cuisineSort {
         case .descending:
-            // sets to descend from A to Z by cuisine
             cuisineSort = .ascending
             recipes.sort {
                 $0.cuisine > $1.cuisine
             }
         default:
-            // sets to ascend from Z to A by cuisine
             cuisineSort = .descending
             recipes.sort {
                 $0.cuisine < $1.cuisine
@@ -60,13 +58,11 @@ class RecipeListViewModel {
         cuisineSort = .none
         switch nameSort {
         case .descending:
-            // sets to descend from A to Z by name
             nameSort = .ascending
             recipes.sort {
                 $0.name > $1.name
             }
         default:
-            // sets to ascend from Z to A by name
             nameSort = .descending
             recipes.sort {
                 $0.name < $1.name

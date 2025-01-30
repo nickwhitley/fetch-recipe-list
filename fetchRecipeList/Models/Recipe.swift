@@ -4,7 +4,7 @@ import SwiftData
 struct RecipeList: Decodable {
     let recipes: [RecipeDTO]
     
-    func toRecipeList() -> [Recipe] {
+    func toDataModelList() -> [Recipe] {
         recipes.map { $0.toDataModel() }
     }
 }
@@ -20,12 +20,12 @@ struct RecipeDTO: Decodable, Identifiable {
     
     func toDataModel() -> Recipe {
         return Recipe(id: id,
-                           cuisine: cuisine,
-                           name: name,
-                           largeImageUrl: largeImageUrl,
-                           smallImageUrl: smallImageUrl,
-                           sourceUrl: sourceUrl,
-                           youtubeUrl: youtubeUrl)
+                      cuisine: cuisine,
+                      name: name,
+                      largeImageUrl: largeImageUrl,
+                      smallImageUrl: smallImageUrl,
+                      sourceUrl: sourceUrl,
+                      youtubeUrl: youtubeUrl)
     }
     
     enum CodingKeys: String, CodingKey {

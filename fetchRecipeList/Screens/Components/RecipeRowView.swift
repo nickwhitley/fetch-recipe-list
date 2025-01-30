@@ -8,15 +8,15 @@ struct RecipeRowView: View {
     
     var body: some View {
         if dynamicSize < .accessibility1 {
-            HorizontalView()
+            horizontalView()
                 .padding(.horizontal)
         } else {
-            VerticalView()
+            verticalView()
                 .padding([.horizontal, .top])
         }
     }
     
-    func HorizontalView() -> some View {
+    func horizontalView() -> some View {
         HStack {
             if let imageUrl = recipe.smallImageUrl {
                 RecipeImageView(imageUrl: imageUrl)
@@ -51,12 +51,14 @@ struct RecipeRowView: View {
         }
     }
     
-    func VerticalView() -> some View {
+    func verticalView() -> some View {
         VStack {
             if let imageUrl = recipe.largeImageUrl {
                 RecipeImageView(imageUrl: imageUrl)
                     .onTapGesture {
-                        viewModel.largeImageViewRecipe = recipe
+                        withAnimation {
+                            viewModel.largeImageViewRecipe = recipe
+                        }
                     }
                     .frame(width: 200, height: 200)
             }

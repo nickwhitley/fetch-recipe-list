@@ -12,7 +12,7 @@ class RecipeService: RecipeServiceProtocol {
         logger.info("Fetching recipes")
         do {
             let recipeData: RecipeList = try await networkService.sendRequest(url: recipeUrl.rawValue)
-            let recipes = recipeData.toRecipeList()
+            let recipes = recipeData.toDataModelList()
             logger.info("Fetched \(recipes.count) recipes")
             return recipes
         } catch {
