@@ -5,12 +5,12 @@ struct RecipeListScreen: View {
     
     var body: some View {
         @Bindable var vmBinding = viewModel
-        TitleBar()
+        RecipeTitleBar()
         ScrollView {
             if viewModel.recipes.isEmpty {
                 Text("No recipes found.")
             } else {
-                ForEach(viewModel.recipes, id: \.id) { recipe in
+                ForEach(viewModel.filteredRecipes, id: \.id) { recipe in
                     RecipeRowView(recipe: recipe)
                     Divider()
                 }
@@ -43,16 +43,7 @@ struct RecipeListScreen: View {
         }
     }
     
-    func TitleBar() -> some View {
-        HStack {
-            Text("Recipes")
-                .font(.title)
-                .bold()
-                .frame(alignment: .center)
-                .padding(.horizontal)
-            Spacer()
-        }
-    }
+    
     
     func LargeImageView(recipe: Recipe) -> some View {
         Rectangle()

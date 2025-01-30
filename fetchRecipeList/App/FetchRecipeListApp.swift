@@ -1,10 +1,3 @@
-//
-//  fetchRecipeListApp.swift
-//  fetchRecipeList
-//
-//  Created by nwhitley.vendor on 1/27/25.
-//
-
 import SwiftUI
 import SwiftData
 
