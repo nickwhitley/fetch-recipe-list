@@ -18,7 +18,7 @@ struct RecipeListScreen: View {
         }
         .listStyle(.plain)
         .task {
-            await viewModel.fetchRecipes(recipeUrl: .malformedRecipes)
+            await viewModel.fetchRecipes()
         }
         .refreshable {
             await viewModel.fetchRecipes()
@@ -30,7 +30,17 @@ struct RecipeListScreen: View {
                 }
             }
         }
-    #warning("Handle Accessibility")
+        .overlay {
+            if viewModel.isLoading {
+                LoadingView()
+            }
+            if let recipe = viewModel.largeImageViewRecipe {
+                LargeImageView(recipe: recipe)
+                    .onTapGesture {
+                        viewModel.largeImageViewRecipe = nil
+                    }
+            }
+        }
     }
     
     func TitleBar() -> some View {
@@ -41,6 +51,39 @@ struct RecipeListScreen: View {
                 .frame(alignment: .center)
                 .padding(.horizontal)
             Spacer()
+        }
+    }
+    
+    func LargeImageView(recipe: Recipe) -> some View {
+        Rectangle()
+            .foregroundStyle(.ultraThinMaterial)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .ignoresSafeArea()
+            .overlay {
+                VStack {
+                    if let imageUrl = recipe.largeImageUrl {
+                        RecipeImageView(imageUrl: imageUrl)
+                        .frame(width: 350, height: 350)
+                    }
+                    Text(recipe.name)
+                        .font(.title)
+                        .bold()
+                }
+            }
+    }
+    
+    func LoadingView() -> some View {
+        Group {
+            Rectangle()
+                .foregroundStyle(.white)
+                .ignoresSafeArea()
+            ProgressView()
+                .progressViewStyle(CircularProgressViewStyle(tint: .gray))
+                .scaleEffect(2.0, anchor: .center)
+                .onAppear {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                    }
+                }
         }
     }
 }

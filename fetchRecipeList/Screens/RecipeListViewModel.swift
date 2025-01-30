@@ -7,12 +7,16 @@ class RecipeListViewModel {
     var recipes: [Recipe] = []
     var alertPresented: Bool = false
     var alertMessage: String = ""
+    var isLoading: Bool = true
+    var largeImageViewRecipe: Recipe?
     
     init(recipeService: RecipeServiceProtocol){
         self.recipeService = recipeService
     }
     
-    func fetchRecipes(recipeUrl: RecipeUrl = .malformedRecipes) async {
+    func fetchRecipes(recipeUrl: RecipeUrl = .validRecipes) async {
+        isLoading = true
+        defer { isLoading = false }
         do {
             recipes = try await recipeService.fetchRecipes(recipeUrl: recipeUrl)
         } catch {

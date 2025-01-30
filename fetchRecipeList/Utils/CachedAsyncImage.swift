@@ -28,12 +28,12 @@ private class ImageLoader {
     private let url: URL?
     
     private static let cache: URLCache = {
-        let memoryCapacity = 100 * 1024 * 1024 // 100 MB
-        let diskCapacity = 500 * 1024 * 1024 // 500 MB
+        let memoryCapacity = 100 * 1024 * 1024 //100MB
+        let diskCapacity = 500 * 1024 * 1024 //500MB
         return URLCache(memoryCapacity: memoryCapacity, diskCapacity: diskCapacity, diskPath: "imagesCache")
     }()
     
-    init(url: URL?, scale: CGFloat = 1, animation: Animation? = nil) {
+    init(url: URL?, scale: CGFloat = 1, animation: Animation? = .easeIn) {
         self.scale = scale
         self.animation = animation
         self.url = url

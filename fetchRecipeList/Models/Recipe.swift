@@ -1,15 +1,15 @@
 import Foundation
 import SwiftData
 
-struct RecipeList: Codable {
+struct RecipeList: Decodable {
     let recipes: [RecipeDTO]
     
     func toRecipeList() -> [Recipe] {
-        return recipes.map { $0.toDataModel() }
+        recipes.map { $0.toDataModel() }
     }
 }
 
-struct RecipeDTO: Codable, Identifiable {
+struct RecipeDTO: Decodable, Identifiable {
     let id: UUID
     let cuisine: String
     let name: String

@@ -1,7 +1,6 @@
 import Foundation
 
 class RecipeService: RecipeServiceProtocol {
-#warning("maybe make a logger factory")
     private let logger = BasicLogger<RecipeService>()
     private let networkService: NetworkServiceProtocol
     
